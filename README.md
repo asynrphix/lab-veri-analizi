@@ -27,6 +27,23 @@ Kaggle (737.453 satır, 24 kolon)
   → gemini_yorum.py    : limit aşan günler için AI yorumu üretir
   → excel_rapor.py     : her şeyi lab_raporu_final.xlsx içine yazar
 ```
+## Süreç Akış Şeması
+
+```mermaid
+flowchart TD
+    A[Kaggle: Ham Veri<br/>737.453 satır] --> B[veri_cek.py<br/>Veri Çekme]
+    B --> C[temizle.py<br/>Temizleme ve Günlük Özet<br/>172 gün]
+    C --> D[analiz.py<br/>İstatistiksel Limit Hesaplama]
+    D --> E{Limit Aşıldı mı?}
+    E -->|Evet| F[Kırmızı İşaretleme]
+    E -->|Hayır| G[Normal Kayıt]
+    F --> H[gemini_yorum.py<br/>AI Yorumu Üretimi]
+    C --> I[sql_analiz.py<br/>SQLite Veritabanı]
+    D --> J[excel_rapor.py<br/>Excel Raporu]
+    H --> J
+    I --> J
+    J --> K[lab_raporu_final.xlsx<br/>Veri + Özet + Pivot + Grafik]
+```
 
 ## Excel Raporunun İçeriği
 
@@ -101,6 +118,10 @@ Bu iki analiz, kod ile değil **doğrudan Excel arayüzünden** eklenmiştir.
 Bu projede her Excel sürümünde çalışması için INDEX+MATCH tercih edilmiştir.
 
 **Test etmek için:** Tarih hücresindeki değeri değiştirince sonucun otomatik güncellendiğini görebilirsiniz.
+
+## İş Analizi
+
+Projenin iş analizi dokümanı (mevcut durum/çözüm analizi, kullanıcı hikayeleri, backlog) için: [is_analizi.md](is_analizi.md)
 
 ## Notlar
 
